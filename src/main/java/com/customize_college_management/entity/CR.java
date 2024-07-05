@@ -1,7 +1,7 @@
 package com.customize_college_management.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Document(collection = "Class_Representative")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,7 +20,9 @@ public class CR extends Student {
 
     private boolean isCrVerified = false;
 
-    @ManyToOne
+    private String courseName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "co_ordinator")
     private Faculty co_ordinator;
 

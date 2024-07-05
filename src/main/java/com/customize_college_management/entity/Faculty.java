@@ -2,20 +2,14 @@ package com.customize_college_management.entity;
 
 import java.util.List;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Document(collection = "Faculties")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -24,9 +18,14 @@ import lombok.ToString;
 public class Faculty {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int faculty_id;
 
     private String facultyName;
+
+    private String mobileNumber;
+
+    private String email;
 
     private boolean isFacultyVerified = false;
 
@@ -39,8 +38,7 @@ public class Faculty {
     @OneToMany(mappedBy = "co_ordinator", cascade = CascadeType.ALL)
     private List<CR> crs;
 
-    
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collegeId")
     private College college;
 

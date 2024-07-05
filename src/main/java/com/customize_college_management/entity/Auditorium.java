@@ -1,18 +1,14 @@
 package com.customize_college_management.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Document(collection = "Auditorium")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,8 +16,8 @@ import lombok.Setter;
 public class Auditorium {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int audiId;
 
     private String audiName;
 
@@ -31,13 +27,18 @@ public class Auditorium {
 
     private boolean isBookedByCr = false;
 
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "floorId")
     private Floor floor;
 
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collegeId")
     private College college;
+
+
+    public Auditorium(String audiName , Floor floor) {
+        this.audiName = audiName;
+        this.floor = floor;
+    }
 }

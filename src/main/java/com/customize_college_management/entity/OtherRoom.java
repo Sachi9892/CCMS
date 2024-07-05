@@ -1,21 +1,20 @@
 package com.customize_college_management.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@Document(collection = "Other_Rooms")
-@AllArgsConstructor     @NoArgsConstructor    @Getter     @Setter   @ToString
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class OtherRoom {
-    
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int otherRoomId;
 
     private String otherRoomName;
@@ -26,12 +25,17 @@ public class OtherRoom {
 
     private boolean isBookedByCr = false;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "floorId")
     private Floor floor;
 
-    
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collegeId")
     private College college;
+
+
+    public OtherRoom(String otherRoomName , Floor floor) {
+        this.otherRoomName = otherRoomName;
+        this.floor = floor;
+    }
 }

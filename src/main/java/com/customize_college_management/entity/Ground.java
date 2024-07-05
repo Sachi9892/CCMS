@@ -1,29 +1,31 @@
 package com.customize_college_management.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@Document(collection = "Grounds")
-@Getter     @Setter     @AllArgsConstructor     @NoArgsConstructor      @ToString
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Ground {
-    
+
     @Id
-    private int grounId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int groundId;
 
     private String name;
 
     private boolean isGroundBooked = false;
 
-    
-    @ManyToOne
+    private boolean isBookedByFaculty = false;
+
+    private boolean isBookedByCr = false;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "collegeId")
     private College college;
 }
